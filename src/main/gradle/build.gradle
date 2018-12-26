@@ -1,0 +1,33 @@
+task HelloWorld {
+	doLast {
+		println 'Hello World'
+	}
+}
+
+/* Since Gradle 3.2 the << (leftShift) operator
+is deprecated. The operator can confuse people. */
+//task HelloWorldSample << {
+//	println 'Hello World'
+//}
+
+
+task StartSession {
+	chant()
+}
+
+def chant() {
+	ant.echo(message: 'Repeat after me ...')
+}
+
+3.times {
+	task "GradleRocks$it" {
+		doLast {
+			println 'Gradle rocks!'
+		}
+	}	
+}
+
+GradleRocks0.dependsOn StartSession
+GradleRocks2.dependsOn GradleRocks1, GradleRocks0
+task GroupThrepy(dependsOn: GradleRocks2)
+

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <Set name="contextPath">/sample</Set>
+    <Set name="war">/Users/Wei/github/gradle-demo/vendors/jetty-9.4.14/simple-app/sample.war</Set>
+</Configure>

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ToDoApp",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "main.java.com.ciaoshen.gradle_demo.todo.ToDoApp",
+            "args": ""
+        }
+    ]
+}
