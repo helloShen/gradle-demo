@@ -1,0 +1,5 @@
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <Set name="contextPath">/todo</Set>
+    <Set name="war">/Users/Wei/github/gradle-demo/build/webapps/chapter3/todo/todo-list-0.3.war</Set>
+</Configure>

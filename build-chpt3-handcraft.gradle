@@ -1,0 +1,75 @@
+/**
+ * 1. create directories if not exist
+ * 2. compile servlet class into web application directory
+ * 3. build war package
+
+ * important references:
+ *      https://discuss.gradle.org/t/module-dependencies-for-a-specific-task/10589
+ */
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.LinkOption;
+
+def root = "/Users/Wei/github/gradle-demo"
+def srcDir = "$root/src/main/java"
+
+def todoSrcDir = "com/ciaoshen/gradle_demo/chapter3/todo"
+def servletPath = "$todoSrcDir/web"
+def servletPackage = "com.ciaoshen.gradle_demo.chapter3.todo.web"
+
+def webRoot = "src/main/webapps/chapter3/todo"
+def webClasses = "$webRoot/WEB-INF/classes"
+
+def warDir = "$root/build/webapps/chapter3/todo"
+def warName = "todo-list.war"
+def warFullPath = "$warDir/$warName"
+
+/** java plugin */
+apply plugin: 'java'
+version = 0.3
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+/**
+ * todo-list project requires org.apache.commons
+ * servlet requires javax.servlet
+ * jst1:1.2 is required at runtime
+ */
+dependencies {
+    // implementation 'org.apache.commons:commons-lang3:3.8.1'  // webapp doesn't need this library
+    compileOnly 'javax.servlet:servlet-api:2.5' // providedCompile doesn't work
+    runtime 'javax.servlet:jstl:1.2'
+}
+
+/** 1. create directory if not exists */
+task createDirectories {
+    Path classDir = Paths.get(webClasses);
+    if (!Files.isDirectory(classDir)) Files.createDirectories(classDir);
+    Path warPath = Paths.get(warDir);
+    if (!Files.isDirectory(warPath)) Files.createDirectories(warPath);
+}
+
+
+/** 2. compile servlet source code */
+// task compileServlet(type: JavaCompile, dependsOn: [createDirectories]) {
+compileJava {
+    source = "$srcDir"
+    include "$servletPath/ToDoServlet.java"
+    options.sourcepath = files("$srcDir")
+    destinationDir = file("$webClasses")
+    dependsOn 'createDirectories'
+}
+
+/** war plugin */
+apply plugin: 'war'
+
+war {
+    webAppDirName = "$webRoot"          // webapp resource directory
+    destinationDir = file("$warDir")    // destination of .war file (deprecated)
+    archiveName = "todo-list-${version}.war"
+}
+

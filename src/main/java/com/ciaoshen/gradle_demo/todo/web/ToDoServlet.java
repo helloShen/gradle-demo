@@ -25,7 +25,7 @@ public class ToDoServlet extends HttpServlet {
             List<ToDoItem> toDoItems = toDoRepository.findAll();
             request.setAttribute("toDoItems", toDoItems);
             return "/jsp/todo-list.jsp";
-        } else if (servletPath.equals("/delete") {
+        } else if (servletPath.equals("/delete")) {
             List<ToDoItem> toDoItems = toDoRepository.delete(item);
             request.setAttribute("toDoItems", toDoItems);
             return "/jsp/todo-list-delete.jsp";
